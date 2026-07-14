@@ -1,4 +1,4 @@
-"""User routes will be added in Sprint 1."""
+"""User routes will be added with authentication and onboarding."""
 
 from fastapi import APIRouter
 

@@ -1,4 +1,4 @@
-"""Authentication routes will be added in Sprint 1."""
+"""Authentication routes will be added in Sprint 3."""
 
 from fastapi import APIRouter
 

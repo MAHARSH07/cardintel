@@ -1,4 +1,4 @@
-"""Bank routes will be added with the card catalogue module."""
+"""Bank catalogue routes will be added in Sprint 2."""
 
 from fastapi import APIRouter
 

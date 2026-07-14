@@ -1,4 +1,4 @@
-"""Card routes will be added with the card catalogue module."""
+"""Card catalogue routes will be added after bank management."""
 
 from fastapi import APIRouter
 

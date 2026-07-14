@@ -1,4 +1,4 @@
-"""Admin routes will be added with administration workflows."""
+"""Admin routes will be added with catalogue administration."""
 
 from fastapi import APIRouter
 
