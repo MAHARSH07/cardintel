@@ -19,3 +19,9 @@ Each application owns its dependencies, configuration, and documentation.
 3. Start the frontend from `frontend`: `npm install` then `npm run dev`.
 
 The agreed v1.0 scope and architecture are recorded in [docs/product-scope-v1.md](docs/product-scope-v1.md).
+
+## Current status
+
+**Sprint 0 — completed:** repository layout, application configuration, database foundation, versioned API structure, and a health endpoint.
+
+**Next — Sprint 1:** authentication and user onboarding.

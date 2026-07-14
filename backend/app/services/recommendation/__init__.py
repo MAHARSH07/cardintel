@@ -1,0 +1,1 @@
+"""Card-ranking business logic."""

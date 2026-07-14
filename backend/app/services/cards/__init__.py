@@ -1,0 +1,1 @@
+"""Card catalogue business logic."""
