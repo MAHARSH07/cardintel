@@ -24,4 +24,6 @@ The agreed v1.0 scope and architecture are recorded in [docs/product-scope-v1.md
 
 **Sprint 0 — completed:** repository layout, application configuration, database foundation, versioned API structure, and a health endpoint.
 
-**Next — Sprint 1:** authentication and user onboarding.
+**Sprint 1 — completed in code:** the core card-domain schema, Alembic migration, and entity-relationship design. See [the schema design](docs/database-schema-v1.md).
+
+**Next:** review the schema, apply the initial migration to PostgreSQL, then implement card-catalogue administration.

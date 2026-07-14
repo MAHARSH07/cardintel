@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from pydantic import BaseModel, EmailStr
 
-from app.models import EmploymentType, UserRole
+from app.models.user import EmploymentType, UserRole
 
 
 class UserProfile(BaseModel):
