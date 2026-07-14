@@ -22,7 +22,6 @@ def timestamps() -> list[sa.Column]:
 
 
 def upgrade() -> None:
-    user_role = sa.Enum("ADMIN", "EDITOR", "USER", name="userrole")
     employment_type = sa.Enum("SALARIED", "SELF_EMPLOYED", "STUDENT", "OTHER", name="employmenttype")
     source_type = sa.Enum("PRODUCT_PAGE", "TERMS_AND_CONDITIONS", "PDF", "WEBPAGE", name="sourcetype")
     card_network = sa.Enum("VISA", "MASTERCARD", "RUPAY", "AMEX", "DINERS", name="cardnetwork")
@@ -35,8 +34,6 @@ def upgrade() -> None:
     sync_status = sa.Enum("PENDING", "RUNNING", "COMPLETED", "FAILED", name="syncstatus")
 
     op.create_table("banks", sa.Column("id", sa.Integer(), primary_key=True), sa.Column("name", sa.String(255), nullable=False), sa.Column("short_name", sa.String(50), nullable=False), sa.Column("official_website", sa.String(500), nullable=False), sa.Column("customer_care", sa.String(100)), *timestamps(), sa.UniqueConstraint("name"), sa.UniqueConstraint("short_name"))
-    op.create_table("users", sa.Column("id", sa.Integer(), primary_key=True), sa.Column("email", sa.String(255), nullable=False), sa.Column("password_hash", sa.String(255), nullable=False), sa.Column("role", user_role, nullable=False), sa.Column("full_name", sa.String(255)), sa.Column("occupation", sa.String(120)), sa.Column("monthly_income", sa.Numeric(12, 2)), sa.Column("state", sa.String(120)), sa.Column("city", sa.String(120)), sa.Column("is_student", sa.Boolean(), nullable=False), sa.Column("employment_type", employment_type), sa.Column("last_login", sa.DateTime(timezone=True)), *timestamps(), sa.UniqueConstraint("email"))
-    op.create_index("ix_users_email", "users", ["email"])
     op.create_table("sources", sa.Column("id", sa.Integer(), primary_key=True), sa.Column("bank_id", sa.Integer(), sa.ForeignKey("banks.id", ondelete="CASCADE"), nullable=False), sa.Column("url", sa.String(1000), nullable=False), sa.Column("source_type", source_type, nullable=False), sa.Column("last_checked", sa.DateTime(timezone=True)), sa.Column("etag", sa.String(255)), *timestamps(), sa.UniqueConstraint("url"))
     op.create_index("ix_sources_bank_id", "sources", ["bank_id"])
     op.create_table("credit_cards", sa.Column("id", sa.Integer(), primary_key=True), sa.Column("bank_id", sa.Integer(), sa.ForeignKey("banks.id", ondelete="RESTRICT"), nullable=False), sa.Column("name", sa.String(255), nullable=False), sa.Column("network", card_network, nullable=False), sa.Column("variant", sa.String(100)), sa.Column("joining_fee", sa.Numeric(12, 2), nullable=False), sa.Column("annual_fee", sa.Numeric(12, 2), nullable=False), sa.Column("fee_waiver", sa.Text()), sa.Column("is_ltf", sa.Boolean(), nullable=False), sa.Column("status", card_status, nullable=False), sa.Column("launch_date", sa.Date()), *timestamps(), sa.UniqueConstraint("bank_id", "name", "variant", name="uq_card_bank_name_variant"))
@@ -65,7 +62,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    for table in ("sync_jobs", "policy_changes", "policy_versions", "redemptions", "charges", "benefits", "reward_caps", "reward_structures", "eligibility", "credit_cards", "sources", "users", "banks"):
+    for table in ("sync_jobs", "policy_changes", "policy_versions", "redemptions", "charges", "benefits", "reward_caps", "reward_structures", "eligibility", "credit_cards", "sources", "banks"):
         op.drop_table(table)
-    for enum_name in ("syncstatus", "policychangetype", "chargetype", "benefittype", "rewardtype", "rewardcategory", "cardstatus", "cardnetwork", "sourcetype", "employmenttype", "userrole"):
+    for enum_name in ("syncstatus", "policychangetype", "chargetype", "benefittype", "rewardtype", "rewardcategory", "cardstatus", "cardnetwork", "sourcetype", "employmenttype"):
         sa.Enum(name=enum_name).drop(op.get_bind(), checkfirst=True)

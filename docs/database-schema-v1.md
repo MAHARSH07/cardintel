@@ -33,11 +33,10 @@ erDiagram
 | `policy_changes` | Human-readable old-to-new policy differences | Many per policy version. |
 | `sources` | Official bank pages, terms, and PDFs to monitor | Many per bank. |
 | `sync_jobs` | Execution history for scheduled/manual source syncs | Optionally belongs to a source. |
-| `users` | Future identity and basic profile data | Kept separate from preferences and history. |
 
 ## Intentional boundaries
 
-- User preferences, saved cards, bookmarks, and recommendation history are separate future tables; they do not belong on `users`.
+- Users, user preferences, saved cards, bookmarks, and recommendation history are deferred to the authentication and personalisation sprint.
 - `policy_versions.document_hash` identifies the source document captured at that point in time.
 - `policy_changes.field_name`, `old_value`, and `new_value` support the UI’s old-to-new comparison view.
 - `sources` remain bank-owned because one official document can describe multiple cards. `policy_versions.source_url` preserves the exact URL used for each historical snapshot.

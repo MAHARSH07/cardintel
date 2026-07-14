@@ -6,7 +6,12 @@ from sqlalchemy import Boolean, Date, Enum, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import TimestampedModel
-from app.models.user import EmploymentType
+
+class EmploymentType(str, enum.Enum):
+    SALARIED = "salaried"
+    SELF_EMPLOYED = "self_employed"
+    STUDENT = "student"
+    OTHER = "other"
 
 
 class CardNetwork(str, enum.Enum):
